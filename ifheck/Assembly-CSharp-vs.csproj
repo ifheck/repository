@@ -46,6 +46,7 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\TestDialog\TestDialog.cs" />
      <Compile Include="Assets\TestItems\TestItems.cs" />
      <Compile Include="Assets\TestVerbBar\TestVerbBar.cs" />
   </ItemGroup>
