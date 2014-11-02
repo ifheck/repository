@@ -4,30 +4,27 @@ using System.Collections;
 public class TestDialog : MonoBehaviour {
 	// private string dialogString = ""; 
 	public GUISkin skin1 = null;
-	public Rect winRect1 = new Rect(20, 20, 430, 200);
+	public Rect winRect1 = new Rect(20, 20, 430, 430);
 	public int selGridInt = 0;
 	public GUIContent[] contentModeOptions;
 	public string paragraphText = "paragraph nothing";
 	public string sT = "nothing";
 
 
-	enum dialogEnums {
-		paratext,
-		paralabel,
-		onetext,
-		onecommand,
-		onevalue,
-		twotext,
-		twocommand,
-		twovalue,
-		threetext,
-		threecommand,
-		threevalue,
-		LAST_ITEM
+	private const int paratext = 0;
+	private const int paralabel = 1;
+	private const int onetext = 2;
+	private const int onecommand = 3;
+	private const int onevalue = 4;
+	private const int twotext = 5;
+	private const int twocommand = 6;
+	private const int twovalue = 7;
+	private const int threetext = 8;
+	private const int threecommand = 9;
+	private const int threevalue = 10;
+	private const int paralen = 11;
 
-	};
 
-	private int paralen = 0;
 	private int prg = 0;
 	private bool dialogShow = true;
 	private string dialogValue = "";
@@ -41,41 +38,42 @@ public class TestDialog : MonoBehaviour {
 		
 	}
 	void drawWin1(int windowID) { 
-		GUILayout.BeginArea (new Rect (0,0,300,300));
+		//GUILayout.BeginArea (new Rect (0,0,500,500));
 		
 		// Begin the singular Horizontal Group
 		
 		// Arrange two more Controls vertically beside the Button
 		GUILayout.BeginVertical();
-		GUILayout.Label (dialogArray[prg * paralen + (int)dialogEnums.paratext]);
-		if (GUILayout.Button (dialogArray [prg * paralen + (int)dialogEnums.onetext])) {
-			dialogValue = dialogArray [prg * paralen + (int)dialogEnums.onevalue];
-			if (dialogArray [prg * paralen + (int)dialogEnums.onecommand] == "close") {
+		GUILayout.Label (dialogArray[prg + paratext]);
+		if (GUILayout.Button (dialogArray [prg + onetext])) {
+			dialogValue = dialogArray [prg + onevalue];
+			if (dialogArray [prg + onecommand] == "close") {
 				dialogShow = false;
 			} else {
-				prg = WhichPara(dialogArray [prg * paralen + (int)dialogEnums.onecommand]);
+				prg = WhichPara(dialogArray [prg + onecommand]);
 			}
 		}
-		if (GUILayout.Button (dialogArray[prg * paralen + (int)dialogEnums.twotext] )){
-			dialogValue = dialogArray [prg * paralen + (int)dialogEnums.twovalue];
-			if (dialogArray [prg * paralen + (int)dialogEnums.twocommand] == "close") {
+		if (GUILayout.Button (dialogArray[prg + twotext] )){
+			dialogValue = dialogArray [prg + twovalue];
+			if (dialogArray [prg + twocommand] == "close") {
 				dialogShow = false;
 			} else {
-				prg = WhichPara(dialogArray [prg * paralen + (int)dialogEnums.twocommand]);
+				prg = WhichPara(dialogArray [prg + twocommand]);
 			}
 		}
-		if (GUILayout.Button (dialogArray[prg * paralen + (int)dialogEnums.threetext] )){
-			dialogValue = dialogArray [prg * paralen + (int)dialogEnums.threevalue];
-			if (dialogArray [prg * paralen + (int)dialogEnums.threecommand] == "close") {
+		if (GUILayout.Button (dialogArray[prg + threetext] )){
+			dialogValue = dialogArray [prg + threevalue];
+			if (dialogArray [prg + threecommand] == "close") {
 				dialogShow = false;
 			} else {
-				prg = WhichPara(dialogArray [prg * paralen + (int)dialogEnums.threecommand]);
+				prg = WhichPara(dialogArray [prg + threecommand]);
 			}
 		}
+		GUILayout.Label (dialogValue);
 
 		// End the Groups and Area
 		GUILayout.EndVertical();
-		GUILayout.EndArea();
+		//GUILayout.EndArea();
 
 		GUI.DragWindow();
 	}
@@ -83,9 +81,7 @@ public class TestDialog : MonoBehaviour {
 	int WhichPara(string paraLabel) {
 		int p = -1;
 		for (int i = 0; i < dialogArray.GetUpperBound(0); i += paralen) {
-			Debug.Log(dialogArray[i * paralen + (int)dialogEnums.paralabel]);
-			if (paraLabel == dialogArray[i * paralen + (int)dialogEnums.paralabel]) {
-				Debug.Log("hello");
+			if (paraLabel == dialogArray[i  + paralabel]) {
 				p = i;
 				break;
 			}
@@ -95,8 +91,6 @@ public class TestDialog : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		//dialogString = string.Join("~", dialogArray);
-		paralen = (int)dialogEnums.LAST_ITEM - 1;
 	}
 	
 	// Update is called once per frame
